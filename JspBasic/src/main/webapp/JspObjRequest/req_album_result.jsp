@@ -20,13 +20,13 @@
 	<%
 	if(name.equals("Without me")){%>
 		<p>에미넴의 <%=name %></p>
-		<iframe src="https://youtu.be/YVkUvmDQ3HY"></iframe>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/YVkUvmDQ3HY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 	<%	
 	}
 	
 	else{%>
 	<p>헤이즈의 <%=name %></p>
-	<iframe src="https://youtu.be/afxLaQiLu-o"></iframe>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/afxLaQiLu-o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 	<%	
 	}
 	%>
