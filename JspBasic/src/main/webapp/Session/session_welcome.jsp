@@ -21,6 +21,8 @@
     String nick = (String)session.getAttribute("userNick");
     
     %>
+    
+    <%@include file="../Application/app_basic.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,8 +36,11 @@
 	<% }
 	else { %>
 		<p><%=nick %>(<%=id %>)님 환영합니다.</p>
+		<a href="session_login.jsp">로그인 페이지</a>
 		<a href="../JspObjRequest/req_album.jsp">앨범 페이지</a>
 	<% } %>
+	
+	<h3>요청된 횟수: <%=count %>회</h3>
 
 </body>
 </html>
