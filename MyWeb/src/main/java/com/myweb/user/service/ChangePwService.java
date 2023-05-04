@@ -29,14 +29,15 @@ public class ChangePwService implements IUserService {
 		UserVO vo = (UserVO)session.getAttribute("user");
 		String id = vo.getUserId();
 		
-		String oldpw = request.getParameter("oldpw");
-		String newpw = request.getParameter("newpw");
+		String oldpw = request.getParameter("old_pw");
+		String newpw = request.getParameter("new_pw");
 		
 		response.setContentType("text/html; charset=UTF-8");
 		String htmlCode;
-		PrintWriter out = null;
+		PrintWriter out ;
 		try {
 			
+			out = response.getWriter();
 			
 			if(dao.userCheck(id,oldpw)==1) {
 				dao.changePassword(id, newpw);
