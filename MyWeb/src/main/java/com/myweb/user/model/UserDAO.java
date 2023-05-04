@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 //DAO(Data Access Object)
@@ -75,6 +76,79 @@ public class UserDAO {
 			// TODO: handle exception
 		}
 	}
+	
+	//로그인 유효성 검증 메소드
+	public int userCheck(String id, String pw) {
+		String sql = "Select user_pw from my_user where user_id = ?";
+		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)){
+			
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {//아이디가 있는가!
+				if(!pw.equals(rs.getString(1))) {//그 아이디와 패스워드가 맞는가!
+					System.out.println("비밀번호 틀림");
+					return 0;
+				}
+				else {
+					
+					return 1;
+				}
+			}
+			else {
+				return -1;
+			}
+
+		}
+		catch (Exception e) {
+			return -2;//DB오류
+		}
+	}
+
+	public UserVO getUserInfo(String id) {
+		UserVO user = null;
+		String sql = "select * from my_user where user_id = '"+id+"'";
+	
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if(rs.next()) {
+				user = new UserVO(
+							rs.getString("user_id"),
+							rs.getString("user_pw"),
+							rs.getString("user_name"),
+							rs.getString("user_email"),
+							rs.getString("user_address")
+						); 
+				
+			}
+			
+		} catch (Exception e) {
+		}
+		
+		return user;
+	}
+	
+	//비밀번호 변경 메서드
+	public void changePassword(String id, String pw) {
+		String sql = "Update my_user set user_pw = ? where user_id = ?";
+		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setString(1,pw);
+			pstmt.setString(2,id);
+			
+			if(pstmt.executeUpdate()==1) {
+				System.out.println("비밀번호 변경완료");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(id);
+			System.out.println(pw);
+		}
+	}
+
 }
 
 
