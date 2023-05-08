@@ -1,5 +1,9 @@
 package com.myweb.board.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -32,14 +36,47 @@ public class BoardDAO implements IBoardDAO {
 	
 	@Override
 	public void regist(String writer, String title, String content) {
-		// TODO Auto-generated method stub
+		String sql = "Insert into my_board (board_id, writer, title, content)"
+				+ "values(board_seq.nextval,?,?,?)";
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, writer);
+			pstmt.setString(2, title);
+			pstmt.setString(3, content);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("글 작성실패");
+		}
 
 	}
 
 	@Override
 	public List<BoardVO> listBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "Select * from my_board order by board_id desc ";
+		
+		List<BoardVO> articles = new ArrayList<>();
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			
+			while(rs.next()) {
+				BoardVO vo = new BoardVO(
+						rs.getInt("board_id"),
+						rs.getString("writer"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getTimestamp("reg_date").toLocalDateTime(),
+						rs.getInt("hit")
+						);
+				articles.add(vo);
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		return articles;
 	}
 
 	@Override

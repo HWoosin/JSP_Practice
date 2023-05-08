@@ -50,7 +50,15 @@
 
 			
 			<tbody>
-				
+				<c:forEach var = "b" items="${boardList}" >
+					<tr>
+						<td>${b.boardId}</td>
+						<td>${b.writer}</td>
+						<td>${b.title}</td>
+						<td>${b.regDate}</td>
+						<td>${b.hit}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 			
 			<%-- 페이징을 처리할 구간 --%>
