@@ -41,18 +41,21 @@ public class ChangePwService implements IUserService {
 			
 			if(dao.userCheck(id,oldpw)==1) {
 				dao.changePassword(id, newpw);
-				
-				htmlCode =  "<script>\r\n"
-                        + "alert('비밀번호가 정상적으로 변경되었습니다');\r\n"
-                        + "history.back();\r\n"
-                        + "</script>";
+				htmlCode = "<script>\r\n"
+                + "location.href='/MyWeb/myPage.user';\r\n"
+				+ "alert('비밀번호가 정상적으로 변경되었습니다');\r\n"
+                + "</script>";
 				out.print(htmlCode);
 				out.flush();
 				out.close();
-				
-				vo = dao.getUserInfo(id);
-				session.setAttribute("user", vo);
-				response.sendRedirect("/MyWeb/myPage.user");
+//				
+//				htmlCode =  "<script>\r\n"
+//                        + "alert('비밀번호가 정상적으로 변경되었습니다');\r\n"
+//                        + "</script>";
+//				out.print(htmlCode);
+//				out.flush();
+//				out.close();
+//				response.sendRedirect("/MyWeb/myPage.user");
 				return;
 			}
 			else {

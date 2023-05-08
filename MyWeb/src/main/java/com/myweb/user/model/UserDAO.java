@@ -148,6 +148,42 @@ public class UserDAO {
 			System.out.println(pw);
 		}
 	}
+	
+	//회원정보 수정 메서드
+	public int updateUser(UserVO vo) {
+		String sql = "Update my_user set "
+				+ "user_name = ? ,"
+				+ "user_email = ? ,"
+				+ "user_address = ? "
+				+ "where user_id = ?";
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setString(1,vo.getUserName());
+			pstmt.setString(2,vo.getUserEmail());
+			pstmt.setString(3,vo.getUserAddress());
+			pstmt.setString(4,vo.getUserId());
+			
+			pstmt.executeUpdate();
+			return 1;
+			
+		} catch (Exception e) {
+			return -2;
+		}
+	}
+	
+	//탈퇴 메서드
+	public void deleteUser(String id) {
+		String sql = "Delete from my_user where user_id = ?";
+		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setString(1,id);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+
+		}
+	}
 
 }
 
