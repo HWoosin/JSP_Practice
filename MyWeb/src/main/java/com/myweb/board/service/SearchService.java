@@ -24,7 +24,7 @@ public class SearchService implements IBoardService {
         	try {
         	PrintWriter out = response.getWriter();
         	String htmlCode =  "<script>\r\n"
-                    + "alert('없는 아이디입니다.');\r\n"
+                    + "alert('검색결과가 없습니다.');\r\n"
                     + "history.back();\r\n"
                     + "</script>";
 			out.print(htmlCode);
