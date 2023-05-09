@@ -106,8 +106,20 @@ public class BoardDAO implements IBoardDAO {
 
 	@Override
 	public void updateBoard(String title, String content, int bId) {
-		// TODO Auto-generated method stub
 
+		String sql = "Update my_board set title = ?, content = ? where board_id = ?";
+		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, bId);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override

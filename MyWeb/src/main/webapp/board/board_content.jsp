@@ -75,15 +75,17 @@
                                 </p>
                             </div>
                             <div class="btn-group col-md-offset-1 col-md-5">
-                                <a class="btn btn-info" href="#">목록 보기</a>
+                                <a class="btn btn-info" href="/MyWeb/list.board">목록 보기</a>
                                 
-                                       
-                                        <a class="btn btn-primary" href="#">수정하기</a>
+                                <c:choose>
+                                	<c:when test="${user.userId == content.writer}">
+                                        <a class="btn btn-primary" href="/MyWeb/modify.board?bId=${content.boardId }">수정하기</a>
                                         <a class="btn btn-danger" href="#" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>            
-                                    
-                                  
-                                        <a class="btn btn-primary" href="#">새 글 쓰기</a>
-                                    
+                                    </c:when>
+                                  	<c:otherwise>
+                                        <a class="btn btn-primary" href="/MyWeb/write.board">새 글 쓰기</a>                                  	
+                                  	</c:otherwise>
+                                </c:choose>   
                                    
                             </div>
                         </div>
