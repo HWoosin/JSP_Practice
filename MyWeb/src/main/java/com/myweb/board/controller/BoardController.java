@@ -15,6 +15,7 @@ import com.myweb.board.service.GetListService;
 import com.myweb.board.service.IBoardService;
 import com.myweb.board.service.ModifyService;
 import com.myweb.board.service.RegistService;
+import com.myweb.board.service.SearchService;
 import com.myweb.board.service.UpdateService;
 import com.myweb.user.service.IUserService;
 
@@ -107,6 +108,15 @@ public class BoardController extends HttpServlet {
 			sv.execute(request, response);
 			response.sendRedirect("/MyWeb/list.board");
 			break;
+		case "search":
+	        System.out.println("글 검색 요청이 들어옴!");
+	        sv = new SearchService();
+	        sv.execute(request, response);
+	        
+	        dp=request.getRequestDispatcher("board/board_list.jsp");
+	        dp.forward(request, response);
+	        break;
+	        
 		}
 	}
 

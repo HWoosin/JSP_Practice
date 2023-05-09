@@ -3,6 +3,7 @@ package com.myweb.board.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,5 +136,32 @@ public class BoardDAO implements IBoardDAO {
 			// TODO: handle exception
 		}
 	}
+	@Override
+    public List<BoardVO> searchBoard(String keyword, String category) {
+        List<BoardVO> searchList = new ArrayList<>();
+        String sql = "SELECT * FROM my_board WHERE " + category + " LIKE ?";
+        try(Connection conn = ds.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, "%" +keyword + "%");
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) {
+                BoardVO vo = new BoardVO(
+                        rs.getInt("board_id"),
+                        rs.getString("writer"),
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getTimestamp("reg_date").toLocalDateTime(),
+                        rs.getInt("hit")
+                        );
+                //객체포장완료했으니 서치 리스트에 add해야지. 방금 생성한 vo를
+                searchList.add(vo); //이걸 조회할 데이터가 없을때까지 반복한다는 것이다!
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return searchList;
+    }
 
 }
