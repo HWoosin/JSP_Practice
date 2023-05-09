@@ -40,7 +40,6 @@
 
 						</ol>
 
-
 						<div class="carousel-inner">
 							<div class="item active">
 								<img class="img-responsive img-full" src="img/1.jpg">
