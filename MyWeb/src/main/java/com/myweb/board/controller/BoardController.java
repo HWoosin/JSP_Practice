@@ -106,6 +106,7 @@ public class BoardController extends HttpServlet {
 			sv = new DeleteService();
 			sv.execute(request, response);
 			response.sendRedirect("/MyWeb/list.board");
+			break;
 		}
 	}
 
