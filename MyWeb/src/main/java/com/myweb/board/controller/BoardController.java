@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.myweb.board.service.ContentService;
 import com.myweb.board.service.GetListService;
 import com.myweb.board.service.IBoardService;
 import com.myweb.board.service.RegistService;
@@ -19,6 +20,7 @@ public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private IBoardService sv;
+	private RequestDispatcher dp;
 	
     public BoardController() {
         super();
@@ -47,7 +49,7 @@ public class BoardController extends HttpServlet {
 //			response.sendRedirect("board/board_list.jsp");
 			//request 객체를 다음 화면까지 운반하기 위한 forward 기능을 제공하는 객체.
 			// -> RequestDispatcher
-			RequestDispatcher dp = request.getRequestDispatcher("board/board_list.jsp");
+			dp = request.getRequestDispatcher("board/board_list.jsp");
 			dp.forward(request, response);
 			break;
 			
@@ -67,6 +69,14 @@ public class BoardController extends HttpServlet {
 			 * sendRedirect()를 사용하여 자동 목록 재 요청이 들어오게 하는 것.
 			 */
 			response.sendRedirect("/MyWeb/list.board");
+			break;
+			
+		case "content":
+			System.out.println("글 상세보기 요청이 들어옴!");
+			sv = new ContentService();
+			sv.execute(request, response);
+			dp=request.getRequestDispatcher("board/board_content.jsp");
+			dp.forward(request, response);
 			break;
 		}
 	}

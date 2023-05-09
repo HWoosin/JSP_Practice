@@ -81,8 +81,27 @@ public class BoardDAO implements IBoardDAO {
 
 	@Override
 	public BoardVO contentBoard(int bId) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from my_board where board_id = ?";
+		BoardVO vo = null;
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setInt(1, bId);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new BoardVO(
+							rs.getInt("board_id"),
+							rs.getString("writer"),
+							rs.getString("title"),
+							rs.getString("content"),
+							rs.getTimestamp("reg_date").toLocalDateTime(),
+							rs.getInt("hit")
+						);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("글 불러오기 실패");
+		}
+		return vo;
 	}
 
 	@Override
