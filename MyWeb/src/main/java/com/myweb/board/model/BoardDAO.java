@@ -124,8 +124,16 @@ public class BoardDAO implements IBoardDAO {
 
 	@Override
 	public void deleteBoard(int bId) {
-		// TODO Auto-generated method stub
-
+		String sql = "Delete from my_board where board_id =?";
+		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, bId);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 }
