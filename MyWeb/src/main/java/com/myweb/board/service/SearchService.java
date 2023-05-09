@@ -25,7 +25,7 @@ public class SearchService implements IBoardService {
         	PrintWriter out = response.getWriter();
         	String htmlCode =  "<script>\r\n"
                     + "alert('검색결과가 없습니다.');\r\n"
-                    + "history.back();\r\n"
+                    + "location.href='/MyWeb/list.board';\r\n"
                     + "</script>";
 			out.print(htmlCode);
 			out.flush();

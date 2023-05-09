@@ -160,8 +160,21 @@ public class BoardDAO implements IBoardDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return searchList;
     }
+	
+	@Override
+	public void upHit(int bId) {
+		String sql ="Update my_board set hit = hit+1 where board_id = ?";
+		
+		try(Connection conn = ds.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setInt(1, bId);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			
+		}
+	}
 
 }
