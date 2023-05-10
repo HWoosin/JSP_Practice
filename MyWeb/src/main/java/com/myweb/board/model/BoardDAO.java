@@ -176,5 +176,23 @@ public class BoardDAO implements IBoardDAO {
 			
 		}
 	}
+	
+	@Override
+	public int countArticels() {
+		int count = 0;
+		String sql = "Select count(*) from my_board";
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			
+			if(rs.next()) {
+				count= rs.getInt("count(*)");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return count;
+	}
 
 }
