@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.myweb.board.commons.PageVO;
+
 public class BoardDAO implements IBoardDAO {
 
 	//커넥션 풀의 정보를 담을 변수를 선언.
@@ -54,8 +56,18 @@ public class BoardDAO implements IBoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> listBoard() {
-		String sql = "Select * from my_board order by board_id desc ";
+	public List<BoardVO> listBoard(PageVO paging) {
+//		String sql = "Select * from my_board order by board_id desc ";
+		String sql = "SELECT * FROM"
+                + "    ("
+                + "    SELECT ROWNUM AS rn, tbl.* FROM"
+                + "        ("
+                + "        SELECT * FROM my_board"
+                + "        ORDER BY board_id DESC"
+                + "        ) tbl"
+                + "    )"
+                + "WHERE rn > " + (paging.getPage()-1) * paging.getCpp()
+                + "AND rn <= " + paging.getPage() * paging.getCpp();
 		
 		List<BoardVO> articles = new ArrayList<>();
 		try(Connection conn = ds.getConnection();
