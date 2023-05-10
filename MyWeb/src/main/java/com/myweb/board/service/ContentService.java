@@ -29,11 +29,8 @@ public class ContentService implements IBoardService {
         */
 		
 		//쿠키만들기
-		Cookie bIdCoo = new Cookie(request.getParameter("bId"), request.getParameter("bId"));
-		bIdCoo.setMaxAge(15);
 		
 		Cookie[] cookies = request.getCookies();
-		response.addCookie(bIdCoo);
 		boolean flag = false;
 		
 		if(cookies != null) {
@@ -45,6 +42,9 @@ public class ContentService implements IBoardService {
 				}
 			}
 			if(!flag) {
+				Cookie bIdCoo = new Cookie(request.getParameter("bId"), request.getParameter("bId"));
+				bIdCoo.setMaxAge(15);
+				response.addCookie(bIdCoo);
 				dao.upHit(bId);
 			}
 			
