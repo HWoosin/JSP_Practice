@@ -190,7 +190,7 @@ public class BoardDAO implements IBoardDAO {
 	}
 	
 	@Override
-	public int countArticels() {
+	public int countArticles() {
 		int count = 0;
 		String sql = "Select count(*) from my_board";
 		try(Connection conn = ds.getConnection();

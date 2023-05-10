@@ -31,7 +31,7 @@ public interface IBoardDAO {
 	void upHit(int bId);
 	
 	//총 게시물 수를 알려주는 메서드
-	int countArticels();
+	int countArticles();
 
 	
 }
